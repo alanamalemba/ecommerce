@@ -25,8 +25,14 @@ public class Product {
 
     @Column(name = "release_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Date releasDate;
+    private Date releaseDate;
 
     private boolean available;
     private int quantity;
+
+    private String imageName;
+    private String imageType;
+
+    @Lob
+    private byte[] imageData;
 }
