@@ -1,5 +1,6 @@
 package com.amalemba.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,8 @@ public class Product {
     private BigDecimal price;
     private String category;
 
-    @Column(name="release_date" )
+    @Column(name = "release_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date releasDate;
 
     private boolean available;
