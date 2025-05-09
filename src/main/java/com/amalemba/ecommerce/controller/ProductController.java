@@ -59,4 +59,40 @@ public class ProductController {
         return ResponseEntity.ok().contentType(MediaType.valueOf(product.getImageType())).body(imageFile);
     }
 
+    @PutMapping("/products/{productId}")
+    public ResponseEntity<String> updateProductById(
+            @PathVariable int productId,
+            @RequestPart Product product, @RequestPart MultipartFile imageFile
+    ) {
+        try {
+            Product updatedProduct = service.updateProductById(productId, product, imageFile);
+
+            if (updatedProduct != null)
+                return new ResponseEntity<>("Product updated successully", HttpStatus.OK);
+            else
+                return new ResponseEntity<>("Failed to update", HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/products/{productId}")
+    public ResponseEntity<String> deleteProductById(@PathVariable int productId) {
+        try {
+            String successMessage = "Product deleted successfully";
+
+            Product targetProduct = service.getProductById((productId));
+
+            if (targetProduct == null) {
+                return new ResponseEntity<>("Product does not exist", HttpStatus.NOT_FOUND);
+            }
+
+            service.deleteProductById(productId);
+            return new ResponseEntity<>(successMessage, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
