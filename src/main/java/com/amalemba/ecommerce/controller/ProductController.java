@@ -95,4 +95,12 @@ public class ProductController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/products/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword) {
+        System.out.println("Searching with " + keyword);
+        List<Product> searchedProducts = service.searchProducts(keyword);
+
+        return new ResponseEntity<>(searchedProducts, HttpStatus.OK);
+    }
 }
